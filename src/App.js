@@ -3,6 +3,8 @@ import axios from "axios";
 import "./index.css";
 import "./Components/NewMeme";
 import "./Components/UserInput";
+import "./Components/Memes";
+import "./Components/Captions";
 
 class App extends Component {
   constructor() {
@@ -31,22 +33,49 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
-        {this.state.captions.map((caption) => {
-          return (
-            <div>
-              <h2>{caption}</h2>
-            </div>
-          );
-        })}
+      <main>
+        <header>
+          <h1>MEMERATOR 2000</h1>
+        </header>
+
         {this.state.memes.map((meme) => {
           return (
-            <div>
+            <section className="images">
               <img src={meme} alt="meme-pic" />
-            </div>
+            </section>
           );
         })}
-      </div>
+        {this.state.captions.map((caption) => {
+          return (
+            <section className="captions">
+              <h2>{caption}</h2>
+            </section>
+          );
+        })}
+        <input type="text" placeholder="Write Your Own Caption Here!"></input>
+        <button>Save Your Caption</button>
+        <aside className="rightSide">
+          <button className="memeButton">Get New Image</button>
+          <button className="captionButton">Get New Caption</button>
+        </aside>
+        <aside className="leftSide">
+          <button id="delete">Delete</button>
+          <button id="delete">Delete</button>
+          <button id="delete">Delete</button>
+          <div id="newMeme">
+            <img src alt="saved-meme"></img>
+            <h3>caption</h3>
+          </div>
+          <div id="newMeme">
+            <img src alt="saved-meme"></img>
+            <h3>caption</h3>
+          </div>
+          <div id="newMeme">
+            <img src alt="saved-meme"></img>
+            <h3>caption</h3>
+          </div>
+        </aside>
+      </main>
     );
   }
 }

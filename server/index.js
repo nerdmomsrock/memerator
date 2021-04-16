@@ -1,6 +1,8 @@
 const express = require("express");
 const { getMemes } = require("./memeController");
 const { getCaptions } = require("./captionController");
+const { getInput } = require("./inputController");
+const { newMemes } = require("./newMemeController");
 
 const app = express();
 
