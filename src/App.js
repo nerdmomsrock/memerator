@@ -5,6 +5,8 @@ import "./Components/NewMeme";
 import "./Components/UserInput";
 import "./Components/Memes";
 import "./Components/Captions";
+const getRandomNumber = (length) => Math.floor(Math.random() * length);
+const getRandomCaption = (length) => Math.floor(Math.random() * length);
 
 class App extends Component {
   constructor() {
@@ -12,6 +14,8 @@ class App extends Component {
     this.state = {
       captions: [],
       memes: [],
+      meme: "",
+      caption: "",
     };
   }
 
@@ -21,15 +25,32 @@ class App extends Component {
       .then((response) => {
         console.log(response.data);
         this.setState({ captions: response.data });
+        this.setRandomCaption();
       })
-      .catch();
+      .catch((error) => {
+        console.log(error);
+      });
     axios
       .get("/api/memes")
       .then((response) => {
         console.log(response.data);
         this.setState({ memes: response.data });
+        this.setRandomMeme();
       })
-      .catch();
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  setRandomMeme() {
+    const index = getRandomNumber(this.state.memes.length);
+
+    this.setState({ meme: this.state.memes[index] });
+  }
+
+  setRandomCaption() {
+    const sentence = getRandomCaption(this.state.captions.length);
+    this.setState({ caption: this.state.captions[sentence] });
   }
   render() {
     return (
@@ -38,25 +59,26 @@ class App extends Component {
           <h1>MEMERATOR 2000</h1>
         </header>
 
-        {this.state.memes.map((meme) => {
-          return (
-            <section className="images">
-              <img src={meme} alt="meme-pic" />
-            </section>
-          );
-        })}
-        {this.state.captions.map((caption) => {
-          return (
-            <section className="captions">
-              <h2>{caption}</h2>
-            </section>
-          );
-        })}
+        <section className="images">
+          <img src={this.state.meme} alt="meme-pic" />
+        </section>
+
+        <section className="captions">
+          <h2>{this.state.caption}</h2>
+        </section>
+
         <input type="text" placeholder="Write Your Own Caption Here!"></input>
         <button>Save Your Caption</button>
         <aside className="rightSide">
-          <button className="memeButton">Get New Image</button>
-          <button className="captionButton">Get New Caption</button>
+          <button className="memeButton" onClick={() => this.setRandomMeme()}>
+            Get New Image
+          </button>
+          <button
+            className="captionButton"
+            onClick={() => this.setRandomCaption()}
+          >
+            Get New Caption
+          </button>
         </aside>
         <aside className="leftSide">
           <button id="delete">Delete</button>
