@@ -16,6 +16,7 @@ class App extends Component {
       memes: [],
       meme: "",
       caption: "",
+      newMemes: [],
     };
   }
 
@@ -42,16 +43,31 @@ class App extends Component {
       });
   }
 
-  setRandomMeme() {
+  setRandomMeme = () => {
     const index = getRandomNumber(this.state.memes.length);
 
     this.setState({ meme: this.state.memes[index] });
-  }
+  };
 
-  setRandomCaption() {
+  setRandomCaption = () => {
     const sentence = getRandomCaption(this.state.captions.length);
     this.setState({ caption: this.state.captions[sentence] });
-  }
+  };
+  saveMeme = () => {
+    axios
+      .post("/api/newMemes", {
+        meme: this.state.meme,
+        caption: this.state.caption,
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.setState({ newMemes: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   render() {
     return (
       <main>
@@ -59,24 +75,23 @@ class App extends Component {
           <h1>MEMERATOR 2000</h1>
         </header>
 
-        <section className="images">
-          <img src={this.state.meme} alt="meme-pic" />
-        </section>
+        <section className="middle">
+          <img className="pics" src={this.state.meme} alt="meme-pic" />
 
-        <section className="captions">
           <h2>{this.state.caption}</h2>
-        </section>
 
-        <input type="text" placeholder="Write Your Own Caption Here!"></input>
-        <button>Save Your Caption</button>
+          <input type="text" placeholder="Write Your Own Caption Here!"></input>
+          <button>Save Your Caption</button>
+        </section>
         <aside className="rightSide">
-          <button className="memeButton" onClick={() => this.setRandomMeme()}>
+          <button className="memeButton" onClick={this.setRandomMeme}>
             Get New Image
           </button>
-          <button
-            className="captionButton"
-            onClick={() => this.setRandomCaption()}
-          >
+          <button className="saveButton" onClick={this.saveMeme}>
+            SAVE
+          </button>
+
+          <button className="captionButton" onClick={this.setRandomCaption}>
             Get New Caption
           </button>
         </aside>

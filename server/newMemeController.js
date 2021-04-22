@@ -1,20 +1,28 @@
-var newMeme = [];
-
+let newMemes = [];
+let id = 0;
 module.exports = {
   newMemes: (req, res) => {
-    //make req.body to push to newMeme array
-    res.status(200).send(newMemes);
-    const generated = ({ meme, caption } = req.body);
+    const { meme, caption } = req.body;
 
     const userCreated = {
       meme,
       caption,
       id,
     };
-    id++;
 
-    newMeme.push(userCreated);
+    if (newMemes.length <= 3) {
+      id++;
+      newMemes.push(userCreated);
+    }
 
-    res.status(200).send(newMeme);
+    res.status(200).send(newMemes);
+  },
+  changeCaption: (req, res) => {
+    const { id, caption } = req.body;
+    for (let i = 0; i < newMemes.length; i++) {
+      if (id === id) {
+        return (caption.req.body = userInput);
+      }
+    }
   },
 };

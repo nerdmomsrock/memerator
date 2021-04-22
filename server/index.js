@@ -1,7 +1,7 @@
 const express = require("express");
 const { getMemes } = require("./memeController");
 const { getCaptions } = require("./captionController");
-const { getInput } = require("./inputController");
+
 const { newMemes } = require("./newMemeController");
 
 const app = express();
@@ -14,5 +14,6 @@ app.get("/api/memes", getMemes);
 
 app.get("/api/captions", getCaptions);
 
-app.post("/api/newMeme", newMemes);
+app.post("/api/newMemes", newMemes);
+app.put("/api/newMemes", newMemes);
 app.listen(PORT, () => console.log(`Rockin' it out on Port ${PORT}`));
