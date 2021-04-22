@@ -6,19 +6,44 @@
 html,
 body {
   height: 100%;
-  overflow: hidden;
+
   margin: 0;
   padding: 0;
+  background-color: rgb(32, 178, 170);
 }
 
 main {
+  width: 100vw;
   height: 100vh;
-  background-color: rgb(32, 178, 170);
+}
+
+.container {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 2fr 1fr;
+  place-items: center;
+  height: 100%;
+}
+.leftSide {
+  display: grid;
+  grid-auto-rows: 1fr;
+  padding: 30px;
+  grid-gap: 20px;
+}
+.middle {
+  display: grid;
+  grid-auto-rows: 1fr;
+  padding: 40px;
+}
+.rightSide {
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-gap: 150px;
 }
 
 header {
   height: 100px;
-  background-color: #808080;
+  background-color: #130202;
 }
 h1 {
   font-size: 80px;
@@ -31,9 +56,11 @@ h1 {
   height: 400px;
   width: 700px;
   display: block;
-  float: right;
-  margin-right: 300px;
-  margin-top: 50px;
+
+  border: 5px dotted black;
+  border-radius: 3%;
+}
+.rightPics {
   border: 5px dotted black;
   border-radius: 3%;
 }
@@ -43,4 +70,33 @@ h2 {
   font-size: 40px;
   font-family: fantasy;
   text-align: center;
+}
+
+.rightButton:hover {
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+.rightButton {
+  background-color: rgba(255, 20, 147, 0.7);
+  border-radius: 5px;
+  font-size: 20px;
+}
+.delete:hover {
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+.delete {
+  background-color: rgba(255, 20, 147, 0.7);
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.saveButton:hover {
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+.saveButton {
+  background-color: rgba(255, 20, 147, 0.7);
+  border-radius: 5px;
+  font-size: 15px;
 }

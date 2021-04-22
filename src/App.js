@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./index.css";
-import "./Components/NewMeme";
-import "./Components/UserInput";
-import "./Components/Memes";
-import "./Components/Captions";
+import NewMeme from "./Components/NewMeme";
+
+import Header from "./Components/Header";
 const getRandomNumber = (length) => Math.floor(Math.random() * length);
 const getRandomCaption = (length) => Math.floor(Math.random() * length);
 
@@ -68,50 +67,67 @@ class App extends Component {
       });
   };
 
+  // res.status(200).send(filteredNewMemes);
+  deleteMeme = (id) => {
+    axios
+      .delete("/api/newMemes/" + id)
+      .then((response) => {
+        this.setState({ newMemes: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  updateNewMemes = (newMemes) => {
+    this.setState({ newMemes });
+  };
+
   render() {
     return (
       <main>
-        <header>
-          <h1>MEMERATOR 2000</h1>
-        </header>
+        <Header header="Memerator 2000" />
+        <div className="container">
+          <aside className="leftSide">
+            {this.state.newMemes.map((meme) => {
+              return (
+                <div className="newMeme">
+                  <img
+                    className="rightPics"
+                    height="200px"
+                    src={meme.meme}
+                    alt="saved-meme"
+                  ></img>
+                  <h3>{meme.caption}</h3>
+                  <button
+                    className="delete"
+                    onClick={() => this.deleteMeme(meme.id)}
+                  >
+                    Delete
+                  </button>
+                  <NewMeme id={meme.id} updateNewMemes={this.updateNewMemes} />
+                </div>
+              );
+            })}
+          </aside>
 
-        <section className="middle">
-          <img className="pics" src={this.state.meme} alt="meme-pic" />
+          <section className="middle">
+            <img className="pics" src={this.state.meme} alt="meme-pic" />
 
-          <h2>{this.state.caption}</h2>
+            <h2>{this.state.caption}</h2>
+          </section>
+          <aside className="rightSide">
+            <button className="rightButton" onClick={this.setRandomMeme}>
+              Get New Image
+            </button>
+            <button className="rightButton" onClick={this.saveMeme}>
+              SAVE
+            </button>
 
-          <input type="text" placeholder="Write Your Own Caption Here!"></input>
-          <button>Save Your Caption</button>
-        </section>
-        <aside className="rightSide">
-          <button className="memeButton" onClick={this.setRandomMeme}>
-            Get New Image
-          </button>
-          <button className="saveButton" onClick={this.saveMeme}>
-            SAVE
-          </button>
-
-          <button className="captionButton" onClick={this.setRandomCaption}>
-            Get New Caption
-          </button>
-        </aside>
-        <aside className="leftSide">
-          <button id="delete">Delete</button>
-          <button id="delete">Delete</button>
-          <button id="delete">Delete</button>
-          <div id="newMeme">
-            <img src alt="saved-meme"></img>
-            <h3>caption</h3>
-          </div>
-          <div id="newMeme">
-            <img src alt="saved-meme"></img>
-            <h3>caption</h3>
-          </div>
-          <div id="newMeme">
-            <img src alt="saved-meme"></img>
-            <h3>caption</h3>
-          </div>
-        </aside>
+            <button className="rightButton" onClick={this.setRandomCaption}>
+              Get New Caption
+            </button>
+          </aside>
+        </div>
       </main>
     );
   }

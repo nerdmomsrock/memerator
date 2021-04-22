@@ -1,5 +1,5 @@
 import axios from "axios";
-import UserInput from "./UserInput";
+
 import React, { Component } from "react";
 
 class NewMeme extends Component {
@@ -12,21 +12,30 @@ class NewMeme extends Component {
   saveCaption = () => {
     axios
       .put("/api/newMemes", {
-        captionInput: this.state.captionInput,
+        id: this.props.id,
+        caption: this.state.captionInput,
       })
       .then((response) => {
         console.log(response.data);
-        this.setState({ captionInput: response.data });
+
+        this.props.updateNewMemes(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+  changeHandler = (e) => {
+    this.setState({ captionInput: e.target.value });
+  };
 
   render() {
     return (
       <div>
-        <UserInput />
+        <input
+          type="text"
+          placeholder="Enter Your Own Caption"
+          onChange={this.changeHandler}
+        />
         <button className="saveButton" onClick={this.saveCaption}>
           Change Caption
         </button>

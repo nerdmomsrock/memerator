@@ -2,7 +2,7 @@ const express = require("express");
 const { getMemes } = require("./memeController");
 const { getCaptions } = require("./captionController");
 
-const { newMemes } = require("./newMemeController");
+const { newMemes, changeCaption, deleteMeme } = require("./newMemeController");
 
 const app = express();
 
@@ -15,5 +15,7 @@ app.get("/api/memes", getMemes);
 app.get("/api/captions", getCaptions);
 
 app.post("/api/newMemes", newMemes);
-app.put("/api/newMemes", newMemes);
+app.put("/api/newMemes", changeCaption);
+
+app.delete("/api/newMemes/:id", deleteMeme);
 app.listen(PORT, () => console.log(`Rockin' it out on Port ${PORT}`));

@@ -10,7 +10,7 @@ module.exports = {
       id,
     };
 
-    if (newMemes.length <= 3) {
+    if (newMemes.length < 3) {
       id++;
       newMemes.push(userCreated);
     }
@@ -19,10 +19,22 @@ module.exports = {
   },
   changeCaption: (req, res) => {
     const { id, caption } = req.body;
-    for (let i = 0; i < newMemes.length; i++) {
-      if (id === id) {
-        return (caption.req.body = userInput);
+
+    newMemes.forEach((val, i) => {
+      if (+id == val.id) {
+        newMemes[i].caption = caption;
       }
-    }
+    });
+    res.status(200).send(newMemes);
+  },
+
+  deleteMeme: (req, res) => {
+    const { id } = req.params;
+
+    //id will be the index of the newMemes array that we will delete
+    const filteredNewMemes = newMemes.filter((val) => val.id !== +id);
+
+    newMemes = filteredNewMemes;
+    res.status(200).send(filteredNewMemes);
   },
 };
